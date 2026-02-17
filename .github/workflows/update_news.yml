@@ -1,0 +1,33 @@
+name: Daily News Update
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Otomatis jalan setiap jam 12 malam (UTC)
+  workflow_dispatch: # Tombol manual agar bisa kamu tes kapan saja
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install pandas matplotlib beautifulsoup4 requests
+
+      - name: Run Scraper
+        run: python scrapper.py # <--- PASTIKAN NAMA FILE PYTHON KAMU BENAR
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add tren_berita.png
+          git commit -m "Automated update: Tren Berita Terbaru" || echo "No changes to commit"
+          git push
