@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 0 * * *' # Otomatis jalan setiap jam 12 malam (UTC)
   workflow_dispatch: # Tombol manual agar bisa kamu tes kapan saja
+  
+# TAMBAHKAN BARIS INI:
+permissions:
+  contents: write
+
 
 jobs:
   update-data:
