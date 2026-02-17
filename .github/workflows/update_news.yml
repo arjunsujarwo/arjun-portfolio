@@ -22,7 +22,7 @@ jobs:
           pip install pandas matplotlib beautifulsoup4 requests
 
       - name: Run Scraper
-        run: python script/scrapper.py # <--- PASTIKAN NAMA FILE PYTHON KAMU BENAR
+        run: python scripts/scrapper.py # <--- PASTIKAN NAMA FILE PYTHON KAMU BENAR
 
       - name: Commit and Push
         run: |
