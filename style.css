@@ -234,3 +234,55 @@ html {
   color: #333;
   word-break: break-all;
 }
+
+.editor-profile {
+  display: flex; /* Ini kunci agar gambar dan teks berdampingan */
+  align-items: center; /* Agar teks rata tengah secara vertikal dengan gambar */
+  padding: 20px 0;
+  border-bottom: 3px double #333;
+  margin-bottom: 20px;
+}
+
+.profile-img {
+  width: 100px; /* Ukuran bisa disesuaikan */
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #333;
+  margin-right: 20px; /* Jarak antara gambar dan teks */
+  filter: grayscale(100%);
+  transition: 0.5s;
+}
+
+.profile-img:hover {
+  filter: grayscale(0%);
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column; /* Menyusun teks (label, nama, bio) ke bawah */
+  justify-content: center;
+}
+
+.profile-info .label {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.profile-info .name {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
+.profile-info .bio {
+  margin: 5px 0 0 0;
+  font-size: 0.85rem;
+  color: #444;
+  line-height: 1.4;
+  max-width: 400px; /* Membatasi lebar teks agar tidak terlalu panjang ke samping */
+}
