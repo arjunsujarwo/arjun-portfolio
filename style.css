@@ -286,3 +286,72 @@ html {
   line-height: 1.4;
   max-width: 400px; /* Membatasi lebar teks agar tidak terlalu panjang ke samping */
 }
+
+.double-line {
+  border: none;
+  border-top: 3px double #333;
+  margin: 20px 0;
+}
+
+.news-img {
+  width: 50%;
+  height: auto;
+  border: 1px solid #000;
+  margin: 10px 0;
+  filter: sepia(0.2); /* Memberikan sedikit kesan vintage */
+}
+
+.caption {
+  font-size: 0.75rem;
+  font-style: italic;
+  text-align: center;
+  margin-top: 5px;
+}
+
+/* Pastikan ukuran gambar konsisten dengan yang pertama */
+.news-img {
+  width: 100%;
+  max-width: 2000px; /* Sesuaikan dengan lebar artikel pertama */
+  height: auto;
+  border: 1px solid #333;
+  display: block;
+  margin: 15px auto;
+}
+
+/* Kotak Penjelasan SQL Results */
+.sql-results-box {
+  background-color: #f9f9f9;
+  border: 1px dashed #333;
+  padding: 15px;
+  margin: 20px 0;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.sql-results-box h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  text-decoration: underline;
+}
+
+.sql-results-box ul {
+  list-style-type: square;
+  padding-left: 20px;
+}
+
+.sql-results-box li {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.tech-tag {
+  font-size: 0.7rem;
+  color: #444;
+  text-align: right;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.double-line {
+  border-top: 3px double #333;
+  margin: 30px 0;
+}
