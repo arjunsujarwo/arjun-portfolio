@@ -22,7 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas matplotlib beautifulsoup4 requests
+          pip install pandas matplotlib beautifulsoup4 requests lxml
 
       - name: Run Scraper
         run: python scripts/scrapper.py
