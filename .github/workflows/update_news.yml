@@ -32,12 +32,16 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Sinkronisasi agar tidak terjadi konflik push
-          git pull origin main --rebase
-          
+          # 1. Tandai file yang berubah dulu
           git add tren_berita.png
           
-          # Commit dengan timestamp agar sejarah data tercatat unik
-          git commit -m "Automated update: Tren Berita Terbaru $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          # 2. Lakukan stash sementara agar pull rebase tidak protes
+          git stash
+          git pull origin main --rebase
+          git stash pop || echo "No stash to pop"
           
+          # 3. Commit dan Push
+          git add tren_berita.png
+          git commit -m "Automated update: Tren Berita Terbaru $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
           git push origin main
+
