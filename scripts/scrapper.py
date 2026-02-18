@@ -19,7 +19,7 @@ def run_scraper():
         response.raise_for_status() 
         
         # Parse XML (RSS menggunakan format XML)
-        soup = BeautifulSoup(response.content, 'xml')
+        soup = BeautifulSoup(response.content, 'lxml')
         items = soup.find_all('item')
         
         titles = [item.title.text.replace(' - CNBC Indonesia', '').strip() for item in items]
