@@ -2,13 +2,11 @@ name: Daily News Update
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Otomatis jalan setiap jam 12 malam (UTC)
-  workflow_dispatch: # Tombol manual agar bisa kamu tes kapan saja
-  
-# TAMBAHKAN BARIS INI:
+    - cron: '0 * * * *' # Saya ubah ke tiap 1 jam agar lebih hemat menit namun tetap live
+  workflow_dispatch:
+
 permissions:
   contents: write
-
 
 jobs:
   update-data:
@@ -27,20 +25,19 @@ jobs:
           pip install pandas matplotlib beautifulsoup4 requests
 
       - name: Run Scraper
-        run: python scripts/scrapper.py # <--- PASTIKAN NAMA FILE PYTHON KAMU BENAR
+        run: python scripts/scrapper.py
 
-       - name: Commit and Push
+      - name: Commit and Push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Ambil perubahan terbaru dari cloud untuk menghindari konflik
+          # Sinkronisasi agar tidak terjadi konflik push
           git pull origin main --rebase
           
           git add tren_berita.png
           
-          # Hanya commit jika ada perubahan agar tidak error
+          # Commit dengan timestamp agar sejarah data tercatat unik
           git commit -m "Automated update: Tren Berita Terbaru $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
           
           git push origin main
-
