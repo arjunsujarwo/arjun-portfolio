@@ -33,7 +33,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           
           # 1. Tandai file yang berubah dulu
-          git add tren_berita.png
+          git add tren_berita.png top_keyword.txt
           
           # 2. Lakukan stash sementara agar pull rebase tidak protes
           git stash
