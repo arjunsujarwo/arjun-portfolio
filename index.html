@@ -74,61 +74,61 @@
           <hr class="single-line" style="margin: 30px 0" />
 
           <article id="portfolio">
-            <div class="section-label">PROJECTS</div>
-            <div class="project-tag">PROJECT 1</div>
-            <h2>Automated Trend Analyzer: CNBC Indonesia Case Study</h2>
-            <p><em>Proyek ini mendemonstrasikan pipeline data end-to-end dari web scraping hingga analisis kata kunci secara real-time.</em></p>
+    <div class="section-label">PROJECTS</div>
+    <div class="project-tag">PROJECT 1</div>
+    <h2>Automated Trend Analyzer: CNBC Indonesia Case Study</h2>
+    <p><em>Proyek ini mendemonstrasikan pipeline data end-to-end dari web scraping hingga analisis kata kunci secara real-time.</em></p>
+    
+    <div class="image-container">
+        <img src="tren_berita.png" alt="Grafik Tren Berita" class="news-img">
+    </div>
+
+    <p>Hasil menunjukkan bahwa topik <strong id="top-topic" style="color: #c00;">Memuat...</strong> menjadi tren utama hari ini berdasarkan frekuensi kemunculan kata pada judul berita.</p>
+
+    <script>
+        fetch('top_keyword.txt?v=' + new Date().getTime())
+            .then(response => {
+                if (!response.ok) throw new Error('File not found');
+                return response.text();
+            })
+            .then(data => {
+                // Mencegah error 404 GitHub (isi HTML) tampil di teks
+                if (data.includes('<')) {
+                    document.getElementById('top-topic').innerText = "Update Terkini";
+                } else {
+                    document.getElementById('top-topic').innerText = data.trim();
+                }
+            })
+            .catch(() => {
+                document.getElementById('top-topic').innerText = "Ekonomi"; 
+            });
+    </script>
+
+    <hr class="double-line">
+    <div class="article">
+        <div class="project-tag">PROJECT 2</div>
+        <h2>DATA ARCHITECT EXCLUSIVE: Action & Sci-Fi Dominate Global Box Office</h2>
+        
+        <div class="main-content">
+            <p>Melalui proses ETL (Extract, Transform, Load), data mentah dari IMDB Top 1000 berhasil diolah ke dalam database SQL untuk menemukan pola pendapatan industri film global.</p>
             
             <div class="image-container">
-                <img src="tren_berita.png" alt="Grafik Tren Berita" class="news-img" style="width:100%; border:1px solid #333; margin:10px 0;">
+                <img src="proyek_database/movie_trends.png" alt="SQL Analysis Result" class="news-img">
             </div>
 
-            <p>Hasil menunjukkan bahwa topik <strong id="top-topic" style="color: #c00;">Memuat...</strong> menjadi tren utama hari ini berdasarkan frekuensi kemunculan kata pada judul berita.</p>
-
-            <script>
-                // Script dengan pengaman agar tidak menampilkan kode HTML mentah
-                fetch('top_keyword.txt?v=' + new Date().getTime())
-                    .then(response => {
-                        if (!response.ok) throw new Error('Not found');
-                        return response.text();
-                    })
-                    .then(data => {
-                        // Jika isi file mengandung tag HTML (berarti error 404), gunakan fallback
-                        if (data.includes('<')) {
-                            document.getElementById('top-topic').innerText = "Update Terkini";
-                        } else {
-                            document.getElementById('top-topic').innerText = data.trim();
-                        }
-                    })
-                    .catch(error => {
-                        document.getElementById('top-topic').innerText = "Video"; 
-                    });
-            </script>
-
-            <hr class="double-line">
-            <div class="article">
-                <div class="project-tag">PROJECT 2</div>
-                <h2>DATA ARCHITECT EXCLUSIVE: Action & Sci-Fi Dominate Global Box Office</h2>
-                
-                <div class="main-content">
-                    <p>Melalui proses ETL (Extract, Transform, Load), data mentah dari IMDB Top 1000 berhasil diolah ke dalam database SQL untuk menemukan pola pendapatan industri film global.</p>
-                    
-                    <div class="image-container">
-                        <img src="proyek_database/movie_trends.png" alt="SQL Analysis Result" class="news-img" style="width:100%; border:1px solid #333; margin:10px 0;">
-                    </div>
-
-                    <div class="sql-results-box">
-                        <h3>Key Insights from SQL Query:</h3>
-                        <ul>
-                            <li><strong>Genre Tertinggi:</strong> Action, Adventure, Fantasy memimpin dengan rata-rata <strong>$352 Juta</strong>.</li>
-                            <li><strong>Volume Data:</strong> Total 21 film Action/Sci-Fi masuk dalam daftar top-grossing.</li>
-                            <li><strong>Kesimpulan:</strong> Kombinasi genre Aksi dan Imajinatif memiliki nilai komersial paling stabil di pasar global.</li>
-                        </ul>
-                        <div class="tech-tag">Query Status: Success [200 OK]</div>
-                    </div>
-                </div>
+            <div class="sql-results-box">
+                <h3>Key Insights from SQL Query:</h3>
+                <ul>
+                    <li><strong>Genre Tertinggi:</strong> Action, Adventure, Fantasy memimpin dengan rata-rata <strong>$352 Juta</strong>.</li>
+                    <li><strong>Volume Data:</strong> Total 21 film Action/Sci-Fi masuk dalam daftar top-grossing.</li>
+                    <li><strong>Kesimpulan:</strong> Kombinasi genre Aksi dan Imajinatif memiliki nilai komersial paling stabil di pasar global.</li>
+                </ul>
+                <div class="tech-tag">Query Status: Success [200 OK]</div>
             </div>
-          </article>
+        </div>
+    </div>
+</article>
+          
         </section>
 
         <aside class="sidebar">
@@ -171,5 +171,6 @@
     </div>
   </body>
 </html>
+
 
 
