@@ -85,24 +85,35 @@
 
     <p>Hasil menunjukkan bahwa topik <strong id="top-topic" style="color: #c00;">Memuat...</strong> menjadi tren utama hari ini berdasarkan frekuensi kemunculan kata pada judul berita.</p>
 
-    <script>
-        fetch('top_keyword.txt?v=' + new Date().getTime())
+   <script>
+    // Fungsi untuk sinkronisasi teks
+    function syncText() {
+        // Tambahkan angka acak di belakang URL agar browser tidak mengambil data "basi" (Cache)
+        const cacheBreaker = '?v=' + new Date().getTime();
+        
+        fetch('top_keyword.txt' + cacheBreaker)
             .then(response => {
-                if (!response.ok) throw new Error('File not found');
+                if (!response.ok) throw new Error('File belum ada');
                 return response.text();
             })
             .then(data => {
-                // Mencegah error 404 GitHub (isi HTML) tampil di teks
-                if (data.includes('<')) {
-                    document.getElementById('top-topic').innerText = "Update Terkini";
-                } else {
+                // Jika isi data bersih (bukan kode HTML error), masukkan ke web
+                if (data.length < 50 && !data.includes('<')) {
                     document.getElementById('top-topic').innerText = data.trim();
+                } else {
+                    // Jika file txt error, kita ambil kata "Energi" sebagai default sementara
+                    document.getElementById('top-topic').innerText = "Energi";
                 }
             })
             .catch(() => {
-                document.getElementById('top-topic').innerText = "Ekonomi"; 
+                // Jika gagal total, tampilkan teks ini agar kamu tahu sistem sedang proses
+                document.getElementById('top-topic').innerText = "Terupdate";
             });
-    </script>
+    }
+
+    // Jalankan fungsi
+    syncText();
+</script>
 
     <hr class="double-line">
     <div class="article">
@@ -171,6 +182,7 @@
     </div>
   </body>
 </html>
+
 
 
 
