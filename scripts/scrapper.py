@@ -5,7 +5,6 @@ from collections import Counter
 import datetime
 
 def run_scraper():
-    # Jalur RSS Google News untuk CNBC Indonesia
     url = "https://news.google.com/rss/search?q=when:24h+allinurl:cnbcindonesia.com&hl=id&gl=ID&ceid=ID:id"
     
     headers = {
@@ -18,7 +17,6 @@ def run_scraper():
         response = requests.get(url, headers=headers)
         response.raise_for_status() 
         
-        # Parse XML (RSS menggunakan format XML)
         soup = BeautifulSoup(response.content, 'lxml')
         items = soup.find_all('item')
         
@@ -30,8 +28,11 @@ def run_scraper():
 
         # Pengolahan Kata
         all_words = " ".join(titles).lower().split()
-        stop_words = ['dan', 'yang', 'untuk', 'pada', 'ke', 'di', 'dari', 'ini', 'itu', 'dengan', 'ada', 'tak', 'bisa']
-        filtered_words = [w for w in all_words if len(w) > 3 and w not in stop_words]
+        # Tambahkan kata umum lainnya ke stop_words agar hasil lebih berkualitas
+        stop_words = ['dan', 'yang', 'untuk', 'pada', 'ke', 'di', 'dari', 'ini', 'itu', 'dengan', 'ada', 'tak', 'bisa', 'dalam', 'akan']
+        
+        # MEMBERSIHKAN TANDA BACA (Penting agar 'video:' jadi 'video')
+        filtered_words = [w.strip(':,."') for w in all_words if len(w) > 3 and w not in stop_words]
         
         counts = Counter(filtered_words).most_common(10)
         words, frequencies = zip(*counts)
@@ -45,20 +46,18 @@ def run_scraper():
         plt.xticks(rotation=45)
         plt.tight_layout()
         
-        # plt.savefig('tren_berita.png')
-        # # ... (kode plotting sebelumnya) ...
-        # plt.savefig('tren_berita.png')
+        # AKTIFKAN KEMBALI SAVEFIG (Tadi ter-comment)
+        plt.savefig('tren_berita.png')
         
-        # TAMBAHKAN INI: Simpan kata terpopuler ke file teks
-        top_word = words[0] # Mengambil kata dengan frekuensi tertinggi
-        with open("top_keyword.txt", "w") as f:
+        # Simpan kata terpopuler ke file teks (Ambil indeks 0 sebagai yang tertinggi)
+        top_word = words[0] 
+        with open("top_keyword.txt", "w", encoding="utf-8") as f:
             f.write(top_word.capitalize())
             
-        print(f"SUKSES! Grafik dan kata kunci '{top_word}' telah diperbarui.")
-        # print(f"SUKSES! Grafik diperbarui via RSS pada {waktu_sekarang}")
+        print(f"SUKSES! Grafik 'tren_berita.png' dan kata kunci '{top_word}' telah diperbarui.")
 
     except Exception as e:
-        print(f"Gagal lagi di RSS: {e}")
+        print(f"Gagal di RSS: {e}")
 
 if __name__ == "__main__":
     run_scraper()
