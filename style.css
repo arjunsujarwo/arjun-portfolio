@@ -400,3 +400,24 @@ html {
         padding-top: 20px;
     }
 }
+/* Pastikan semua gambar proyek konsisten ukurannya */
+.news-img, .image-container img {
+    width: 100% !important; /* Memaksa gambar selebar kontainer */
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #333;
+    display: block;
+    margin: 10px auto;
+}
+@media (max-width: 768px) {
+    .main-content {
+        display: flex;
+        flex-direction: column; /* Kolom koran jadi satu kolom memanjang ke bawah */
+    }
+    
+    .sidebar {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #333;
+    }
+}
