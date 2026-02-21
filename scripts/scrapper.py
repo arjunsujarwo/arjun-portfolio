@@ -45,8 +45,17 @@ def run_scraper():
         plt.xticks(rotation=45)
         plt.tight_layout()
         
-        plt.savefig('tren_berita.png')
-        print(f"SUKSES! Grafik diperbarui via RSS pada {waktu_sekarang}")
+        # plt.savefig('tren_berita.png')
+        # # ... (kode plotting sebelumnya) ...
+        # plt.savefig('tren_berita.png')
+        
+        # TAMBAHKAN INI: Simpan kata terpopuler ke file teks
+        top_word = words[0] # Mengambil kata dengan frekuensi tertinggi
+        with open("top_keyword.txt", "w") as f:
+            f.write(top_word.capitalize())
+            
+        print(f"SUKSES! Grafik dan kata kunci '{top_word}' telah diperbarui.")
+        # print(f"SUKSES! Grafik diperbarui via RSS pada {waktu_sekarang}")
 
     except Exception as e:
         print(f"Gagal lagi di RSS: {e}")
