@@ -35,12 +35,21 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Menarik perubahan terbaru agar tidak bentrok
-          git pull origin main --rebase
-          
-          # Menambahkan semua file hasil produksi script
+          # 1. Tambahkan semua file yang berubah/baru terlebih dahulu
           git add tren_berita.png top_keyword.txt crypto_trend.png crypto_status.txt
           
-          # Commit hanya jika ada perubahan
+          # 2. Simpan perubahan sementara (stash) agar pull rebase bersih
+          git stash
+          
+          # 3. Ambil update terbaru dari server
+          git pull origin main --rebase
+          
+          # 4. Kembalikan perubahan tadi
+          git stash pop || echo "No changes to pop"
+          
+          # 5. Add kembali dan commit
+          git add tren_berita.png top_keyword.txt crypto_trend.png crypto_status.txt
           git commit -m "Automated update: News, Keywords, and Crypto Data" || echo "No changes to commit"
-          git push origin main
+          
+          # 6. Push ke repositori
+          git push origin main   
