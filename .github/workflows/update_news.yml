@@ -1,8 +1,8 @@
-name: Daily News Update
+name: Daily News and Crypto Update
 
 on:
   schedule:
-    - cron: '0 * * * *' # Saya ubah ke tiap 1 jam agar lebih hemat menit namun tetap live
+    - cron: '0 * * * *' # Berjalan tiap 1 jam
   workflow_dispatch:
 
 permissions:
@@ -24,30 +24,23 @@ jobs:
         run: |
           pip install pandas matplotlib beautifulsoup4 requests lxml
 
-      - name: Run Scraper
+      - name: Run Scraper News
         run: python scripts/scrapper.py
-      - name: Commit and Push
+
+      - name: Run Crypto Analyzer
+        run: python scripts/crypto_analyzer.py
+
+      - name: Commit and Push All Changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Tambahkan kedua file ini
-          git add tren_berita.png top_keyword.txt
-          
-          git stash
+          # Menarik perubahan terbaru agar tidak bentrok
           git pull origin main --rebase
-          git stash pop || echo "No stash"
           
-          git add tren_berita.png top_keyword.txt
-          git commit -m "Automated update: News & Keywords" || echo "No changes"
+          # Menambahkan semua file hasil produksi script
+          git add tren_berita.png top_keyword.txt crypto_trend.png crypto_status.txt
+          
+          # Commit hanya jika ada perubahan
+          git commit -m "Automated update: News, Keywords, and Crypto Data" || echo "No changes to commit"
           git push origin main
-
-      - name: Commit and Push changes
-        run: |
-             git config --local user.email "action@github.com"
-             git config --local user.name "GitHub Action"
-             git add crypto_trend.png crypto_status.txt
-             git commit -m "Automated update: Crypto Data" || exit 0
-             git push
-     
-
