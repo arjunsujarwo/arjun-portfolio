@@ -41,6 +41,14 @@ jobs:
           git add tren_berita.png top_keyword.txt
           git commit -m "Automated update: News & Keywords" || echo "No changes"
           git push origin main
+
+      - name: Commit and Push changes
+        run: |
+             git config --local user.email "action@github.com"
+             git config --local user.name "GitHub Action"
+             git add crypto_trend.png crypto_status.txt
+             git commit -m "Automated update: Crypto Data" || exit 0
+             git push
       # - name: Commit and Push
       #   run: |
       #     git config --local user.email "github-actions[bot]@users.noreply.github.com"
