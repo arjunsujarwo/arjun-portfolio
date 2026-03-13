@@ -17,7 +17,7 @@ def run_scraper():
         response = requests.get(url, headers=headers)
         response.raise_for_status() 
         
-        soup = BeautifulSoup(response.content, 'lxml')
+       soup = BeautifulSoup(response.content, 'xml')
         items = soup.find_all('item')
         
         titles = [item.title.text.replace(' - CNBC Indonesia', '').strip() for item in items]
