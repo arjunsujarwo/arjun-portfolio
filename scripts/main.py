@@ -1,20 +1,31 @@
+# scripts/main.py
+import scrapper
+import analyzer
+import crypto_analyzer
 import ingestion
 import anomaly_detector
-import time
 from datetime import datetime
 
-def run_pipeline():
-    print(f"\n[{datetime.now()}] Memulai Pipeline Otomatis...")
+def run_all_updates():
+    print(f"=== [{datetime.now()}] MEMULAI ETL PIPELINE ===")
     
-    # Langkah 1: Ambil Data Baru
-    ingestion.fetch_market_data()
+    # Project 1: News Scraper & Analyzer
+    print("\n[1/4] Mengambil dan menganalisis berita...")
+    scrapper.run() # Pastikan di scrapper.py ada fungsi def run()
+    analyzer.analyze_and_plot()
     
-    # Langkah 2: Deteksi Anomali
+    # Project 3: Crypto Analyzer
+    print("\n[2/4] Menganalisis pasar Crypto...")
+    crypto_analyzer.run_analysis() # Sesuaikan nama fungsi di crypto_analyzer.py
+    
+    # Project 4: Anomaly Detection (Ingestion & Detection)
+    print("\n[3/4] Ingesting market data & detecting anomalies...")
+    # Jika di ingestion.py nama fungsinya fetch_market_data:
+    ingestion.fetch_market_data() 
+    # Jika di anomaly_detector.py nama fungsinya detect_anomalies:
     anomaly_detector.detect_anomalies("market_transactions.csv")
     
-    print(f"[{datetime.now()}] Pipeline Selesai.\n")
+    print(f"\n=== [{datetime.now()}] SEMUA DATA BERHASIL DIPERBARUI ===")
 
 if __name__ == "__main__":
-    # Untuk keperluan demo, kita jalankan sekali.
-    # Di server/cloud, ini akan dipicu oleh Task Scheduler atau GitHub Actions.
-    run_pipeline()
+    run_all_updates()
