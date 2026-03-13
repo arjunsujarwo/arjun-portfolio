@@ -1,9 +1,9 @@
-name: Daily News, Crypto, and Anomaly Dashboard Update
+name: Daily News, Crypto, and Anomaly Update
 
 on:
   schedule:
-    - cron: '0 * * * *' # Berjalan tiap 1 jam
-  workflow_dispatch: # Memungkinkan kamu menjalankan manual dari tab Actions
+    - cron: '0 * * * *' # Berjalan otomatis tiap jam
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -24,30 +24,28 @@ jobs:
         run: |
           pip install pandas matplotlib beautifulsoup4 requests lxml plotly
 
-      - name: Run News Scraper
+      - name: Run News Scrapper (Project 1)
         run: python scripts/scrapper.py
 
-      - name: Run Crypto Analyzer
+      - name: Run News Analyzer (Project 1)
+        run: python scripts/analyzer.py
+
+      - name: Run Crypto Analyzer (Project 3)
         run: python scripts/crypto_analyzer.py
 
-      - name: Run Anomaly Detection & Dashboard (Project 4)
-        run: |
-          python main.py
-          python visualizer.py
+      - name: Run Anomaly Visualizer (Project 4)
+        run: python visualizer.py # Karena file ini ada di luar folder scripts
 
       - name: Commit and Push All Changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Ambil update terbaru untuk menghindari konflik
           git pull origin main --rebase
           
-          # Tambahkan semua file hasil generate (Berita, Crypto, dan Dashboard)
+          # Tambahkan semua aset yang dihasilkan oleh skrip-skrip di atas
           git add tren_berita.png top_keyword.txt crypto_trend.png crypto_status.txt dashboard.html market_transactions.csv
           
-          # Commit hanya jika ada perubahan
-          git commit -m "Automated update: News, Crypto, and Anomaly Dashboard [skip ci]" || echo "No changes to commit"
+          git commit -m "Automated update: News, Keywords, Crypto, and Dashboard [skip ci]" || echo "No changes to commit"
           
-          # Push hasil update
           git push origin main
