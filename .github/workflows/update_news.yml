@@ -36,7 +36,13 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git pull origin main --rebase
+          
+          # 1. Daftarkan semua file hasil generate Python (PENTING!)
           git add .
+          
+          # 2. Ambil perubahan dari server (jika ada) tanpa bentrok
+          git pull origin main --rebase
+          
+          # 3. Commit dan Push
           git commit -m "Automated Data Update: All Projects [skip ci]" || echo "No changes to commit"
           git push origin main
