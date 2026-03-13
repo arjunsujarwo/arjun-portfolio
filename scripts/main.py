@@ -15,8 +15,8 @@ def run_all_updates():
     analyzer.analyze_and_plot()
     
     # Project 3: Crypto Analyzer
-    print("\n[2/4] Menganalisis pasar Crypto...")
-    crypto_analyzer.run_analysis() # Sesuaikan nama fungsi di crypto_analyzer.py
+   print("\n[2/4] Menganalisis pasar Crypto...")
+    crypto_analyzer.run_crypto_project() # Sesuaikan nama fungsi di crypto_analyzer.py
     
     # Project 4: Anomaly Detection (Ingestion & Detection)
     print("\n[3/4] Ingesting market data & detecting anomalies...")
@@ -29,4 +29,5 @@ def run_all_updates():
 
 if __name__ == "__main__":
     run_all_updates()
+
 
