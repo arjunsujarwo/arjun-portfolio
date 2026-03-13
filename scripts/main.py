@@ -11,7 +11,7 @@ def run_all_updates():
     
     # Project 1: News Scraper & Analyzer
     print("\n[1/4] Mengambil dan menganalisis berita...")
-    scrapper.run() # Pastikan di scrapper.py ada fungsi def run()
+    scrapper.run_scraper() # Pastikan di scrapper.py ada fungsi def run()
     analyzer.analyze_and_plot()
     
     # Project 3: Crypto Analyzer
@@ -29,3 +29,4 @@ def run_all_updates():
 
 if __name__ == "__main__":
     run_all_updates()
+
