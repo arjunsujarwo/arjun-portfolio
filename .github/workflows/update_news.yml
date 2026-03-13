@@ -1,51 +1,19 @@
-name: Daily News, Crypto, and Anomaly Update
-
-on:
-  schedule:
-    - cron: '0 * * * *' # Berjalan otomatis tiap jam
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-jobs:
-  update-data:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: |
-          pip install pandas matplotlib beautifulsoup4 requests lxml plotly
-
-      - name: Run News Scrapper (Project 1)
-        run: python scripts/scrapper.py
-
-      - name: Run News Analyzer (Project 1)
-        run: python scripts/analyzer.py
-
-      - name: Run Crypto Analyzer (Project 3)
-        run: python scripts/crypto_analyzer.py
-
-      - name: Run Anomaly Visualizer (Project 4)
-        run: python visualizer.py # Karena file ini ada di luar folder scripts
-
-      - name: Commit and Push All Changes
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          
-          git pull origin main --rebase
-          
-          # Tambahkan semua aset yang dihasilkan oleh skrip-skrip di atas
-          git add tren_berita.png top_keyword.txt crypto_trend.png crypto_status.txt dashboard.html market_transactions.csv
-          
-          git commit -m "Automated update: News, Keywords, Crypto, and Dashboard [skip ci]" || echo "No changes to commit"
-          
-          git push origin main
+- name: Install dependencies
+  run: |
+    pip install pandas matplotlib beautifulsoup4 requests lxml plotly
+- name: Run Data Pipeline (Project 1, 3, 4)
+  run: |
+    cd scripts
+    python main.py
+- name: Update Dashboard HTML (Project 4)
+  run: |
+    # Jalankan visualizer yang ada di root
+    python visualizer.py
+- name: Commit and Push All Changes
+  run: |
+    git config --local user.email "github-actions[bot]@users.noreply.github.com"
+    git config --local user.name "github-actions[bot]"
+    git pull origin main --rebase
+    git add .
+    git commit -m "Automated Data Update: All Projects [skip ci]" || echo "No changes"
+    git push origin main
