@@ -22,8 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas matplotlib beautifulsoup4 requests lxml plotly
-
+          pip install pandas matplotlib beautifulsoup4 requests lxml plotly yfinance
       - name: Run Full Data Pipeline
         run: |
           # Masuk ke folder scripts untuk jalankan mesin data
