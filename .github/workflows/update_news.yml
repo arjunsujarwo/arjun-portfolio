@@ -2,7 +2,7 @@ name: Daily News, Crypto, and Anomaly Update
 
 on:
   schedule:
-    - cron: '0 * * * *' # Berjalan tiap 1 jam
+    - cron: '0 * * * *' # Berjalan setiap jam
   workflow_dispatch:
 
 permissions:
@@ -23,12 +23,13 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pandas matplotlib beautifulsoup4 requests lxml plotly yfinance
-      - name: Run Full Data Pipeline
+
+      - name: Run Full Pipeline
         run: |
-          # Masuk ke folder scripts untuk jalankan mesin data
+          # Jalankan pengolahan data
           cd scripts
           python main.py
-          # Kembali ke root agar visualizer bisa simpan dashboard.html di tempat yang benar
+          # Jalankan visualizer dari root
           cd ..
           python visualizer.py
 
@@ -37,12 +38,14 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # 1. Daftarkan semua file hasil generate Python (PENTING!)
+          # Tambahkan semua file baru
           git add .
           
-          # 2. Ambil perubahan dari server (jika ada) tanpa bentrok
+          # Commit hasil kerja bot
+          git commit -m "Automated Data Update: All Projects [skip ci]" || echo "No changes to commit"
+          
+          # Tarik data terbaru dari server dengan rebase
           git pull origin main --rebase
           
-          # 3. Commit dan Push
-          git commit -m "Automated Data Update: All Projects [skip ci]" || echo "No changes to commit"
+          # Push hasil akhir
           git push origin main
