@@ -53,3 +53,7 @@ jobs:
           
           # 6. Push ke repositori
           git push origin main   
+
+          git add .
+          git commit -m "Update portfolio with Project 4: Anomaly Detection Dashboard"
+          git push origin main
